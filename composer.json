@@ -54,6 +54,17 @@
         "test": [
             "@php artisan config:clear --ansi",
             "@php artisan test"
+        ],
+        "fresh": [
+            "@php artisan migrate:fresh --seed"
+        ],
+        "setup": [
+            "composer install",
+            "@php artisan key:generate",
+            "@php artisan migrate:fresh --seed"
+        ],
+        "format": [
+            "./vendor/bin/pint"
         ]
     },
     "extra": {
