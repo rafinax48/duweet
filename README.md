@@ -22,15 +22,19 @@ Sebelum menginstall aplikasi ini, pastikan sistem Anda memiliki:
 
 ## 🚀 Installation
 
-### 1. Cek dan Install Requirements
+### Opsi 1: Clone Repository Ini (Recommended)
 
-#### Cek PHP Version
+Jika Anda ingin menggunakan project Duweet yang sudah jadi:
+
+#### 1. Cek dan Install Requirements
+
+##### Cek PHP Version
 ```bash
 php --version
 ```
 Pastikan versi PHP 8.3 atau lebih tinggi.
 
-#### Cek/Install Composer
+##### Cek/Install Composer
 ```bash
 composer --version
 ```
@@ -44,7 +48,7 @@ Jika Composer belum terinstall:
   sudo mv composer.phar /usr/local/bin/composer
   ```
 
-#### Cek/Install MySQL
+##### Cek/Install MySQL
 ```bash
 mysql --version
 ```
@@ -54,18 +58,18 @@ Jika MySQL belum terinstall:
 - **macOS**: `brew install mysql`
 - **Linux**: `sudo apt install mysql-server` (Ubuntu/Debian)
 
-### 2. Clone Repository
+#### 2. Clone Repository
 ```bash
-git clone https://github.com/username/duweet.git
+git clone https://github.com/ardiansyah-sweng/duweet.git
 cd duweet
 ```
 
-### 3. Install Dependencies
+#### 3. Install Dependencies
 ```bash
 composer install
 ```
 
-### 4. Environment Setup
+#### 4. Environment Setup
 ```bash
 # Copy environment file
 cp .env.example .env
@@ -74,7 +78,7 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-### 5. Database Configuration
+#### 5. Database Configuration
 
 Edit file `.env` dan sesuaikan konfigurasi database:
 ```env
@@ -86,7 +90,7 @@ DB_USERNAME=root
 DB_PASSWORD=your_mysql_password
 ```
 
-### 6. Create Database
+#### 6. Create Database
 ```bash
 # Login ke MySQL
 mysql -u root -p
@@ -96,23 +100,121 @@ CREATE DATABASE duweet CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 exit;
 ```
 
-### 7. Run Migrations & Seeders
+#### 7. Run Migrations & Seeders
 ```bash
 php artisan migrate:fresh --seed
 ```
 
-Perintah ini akan:
-- Membuat tabel-tabel yang dibutuhkan
-- Mengisi data account real-world untuk personal finance
-
-### 8. Start Development Server
+#### 8. Start Development Server
 ```bash
 php artisan serve
 ```
 
 Aplikasi akan berjalan di: http://localhost:8000
 
-## 🗂️ Database Structure
+### Opsi 2: Install Laravel Baru dan Setup Manual
+
+Jika Anda ingin membuat project Laravel baru dan mengimplementasikan struktur Duweet:
+
+#### 1. Install Laravel via Composer
+```bash
+# Install Laravel installer globally
+composer global require laravel/installer
+
+# Atau create project langsung
+composer create-project laravel/laravel duweet
+
+cd duweet
+```
+
+#### 2. Konfigurasi Database
+```bash
+# Copy .env
+cp .env.example .env
+
+# Generate key
+php artisan key:generate
+
+# Edit .env untuk MySQL
+```
+
+#### 3. Buat Migration Accounts
+```bash
+php artisan make:migration create_accounts_table
+```
+
+#### 4. Setup Struktur Accounts Manual
+- Salin struktur migration dari `database/migrations/2025_08_06_054402_create_accounts_table.php`
+- Salin AccountType enum dari `app/Enums/AccountType.php`  
+- Salin AccountColumns constants dari `app/Constants/AccountColumns.php`
+- Salin account data dari `database/data/accounts_data.php`
+- Salin AccountSeeder dari `database/seeders/AccountSeeder.php`
+
+#### 5. Run Migration
+```bash
+php artisan migrate:fresh --seed
+```
+
+## � Laravel Installation Basics
+
+Jika Anda baru dengan Laravel, berikut adalah panduan dasar:
+
+### Install PHP (Windows)
+1. Download PHP dari [php.net/downloads](https://www.php.net/downloads.php)
+2. Extract ke `C:\php`
+3. Add `C:\php` ke PATH environment variable
+4. Buat file `php.ini` dari `php.ini-development`
+5. Enable extensions yang dibutuhkan:
+   ```ini
+   extension=pdo_mysql
+   extension=mbstring
+   extension=openssl
+   extension=curl
+   extension=fileinfo
+   ```
+
+### Install Composer
+1. Download dari [getcomposer.org](https://getcomposer.org/download/)
+2. Run installer dan ikuti petunjuk
+3. Verify: `composer --version`
+
+### Laravel Project Types
+- **New Project**: `composer create-project laravel/laravel project-name`
+- **Clone Existing**: `git clone repository-url`
+- **Laravel Installer**: `composer global require laravel/installer`
+
+### Basic Laravel Commands
+```bash
+# Create new Laravel project
+composer create-project laravel/laravel my-project
+
+# Install dependencies
+composer install
+
+# Generate application key
+php artisan key:generate
+
+# Run migrations
+php artisan migrate
+
+# Start development server
+php artisan serve
+
+# Clear cache
+php artisan cache:clear
+php artisan config:clear
+
+# Make new controller
+php artisan make:controller YourController
+
+# Make new model
+php artisan make:model YourModel
+
+# Make new migration
+php artisan make:migration create_your_table
+```
+
+### �🗂️ Database Structure
 
 ### Accounts Table
 Aplikasi menggunakan struktur hierarchical accounts dengan 3 level maksimal:
