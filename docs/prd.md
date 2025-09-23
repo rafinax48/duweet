@@ -2,9 +2,17 @@
 Aplikasi personal finance berbasis gamifikasi
 
 ## Proses
-- User mengelola account (CRUD)
+- Registrasi **user** baru (CRUD)
+- User mengelola **account** (CRUD)
+- User mengelola **transaction** (CRUD)
+
+## Requirements
+- **User**
+  - Bisa registrasi
+  - Bisa mencatat transaksi keuangan
 
 ## Entitas
+- **User**. User adalah pengguna aplikasi Duweet.
 - **Account Type**. Jenis account untuk transaksi.
   - Data
     - Income    (IN)
@@ -12,7 +20,7 @@ Aplikasi personal finance berbasis gamifikasi
     - Spending  (SP)
     - Liability (LI)
     - Asset     (AS)
-  - Note: Di buat sebagai enum. Check app/Enums/AccountType.php
+  - Note: Di buat sebagai enum bukan tabel. Check app/Enums/AccountType.php
 - **Account**. Nama account untuk transaksi keuangan (mendukung nested/hierarchical structure)
   - Atribut
     - id (Primary Key)
@@ -52,3 +60,5 @@ Aplikasi personal finance berbasis gamifikasi
     - Liability account bisa memiliki saldo negatif
     - Leaf account tidak bisa dihapus jika masih ada transaksi
     - Name harus unique per level dalam parent yang sama
+- **UserAccount**. Adalah entitas/tabel relasi entitas **User** dengan **Account**.
+- **Transaction**: adalah entitas yang mendata tiap transaksi keuangan yang terjadi
